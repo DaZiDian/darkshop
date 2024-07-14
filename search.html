@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkShop 顶部栏示例</title>
+    <link rel="icon" href="./images/dslogo.jpg">
+    <style>
+        @font-face {
+            font-family: 'MinecraftAE';
+            src: url('font/MinecraftAE.ttf') format('truetype');
+        }
+        body, .logo, .shop-name, .links a, #languageSwitch {
+            font-family: 'MinecraftAE', sans-serif;
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">
+            <a href="#"><img src="images/dslogo.jpg" alt="Logo"></a>
+            <span class="shop-name">DarkShop</span>
+        </div>
+        <div class="links">
+            <a href="index.html" data-lang="productList">商品列表</a>
+            <a href="search.html" data-lang="orderSearch">查询订单</a>
+        </div>
+        <div class="language-switch">  
+            <img src="images/i18n.png" alt="Switch Language" id="languageSwitch">  
+        </div>
+    </div>
+    <div class="container">
+        <div class="glassy-box">
+            <img src="images/dslogo.jpg" alt="Banner image" class="banner-img">
+            <div class="text-content">
+                <p data-lang="welcome"></p>
+                <p data-lang="paymentIssue"></p>
+                <p data-lang="underageNotice"></p>
+                <br>
+                <p data-lang="FREETHEPALESTINE"></p>
+            </div>
+        </div>
+        <div class="divider"></div> <!-- 添加分割线 -->
+        <p data-lang="searchitem"></p>
+        <div class="form-container">
+            <input class="input" type="text" placeholder="订单号/QQ号/邮箱/手机号">
+            <button class="submit" type="submit">点击查询</button>
+        </div>
+    </div>
+
+    <footer id="footerSection">
+        <div class="copyright-info">
+            &copy; 2020-present <a href="#">DarkShop</a>. All copyrights reserved.
+        </div>
+        <div class="language-selector">
+            <div class="language-icons">
+                <div class="lang-icon">
+                    <img src="images/zh-CN.png" alt="Chinese (Simplified)" data-lang="zh-CN">
+                </div>
+                <div class="lang-icon">
+                    <img src="images/zh-HK.png" alt="Chinese (Traditional)" data-lang="zh-HK">
+                </div>
+                <div class="lang-icon">
+                    <img src="images/ar-PL.png" alt="Arabic" data-lang="ar-PS">
+                </div>
+                <div class="lang-icon">
+                    <img src="images/ru-RU.png" alt="Russian" data-lang="ru-RU">
+                </div>
+                <div class="lang-icon">
+                    <img src="images/en-US.png" alt="English" data-lang="en-US">
+                </div>
+                <div class="lang-icon">
+                    <img src="images/ja-JP.png" alt="Japanese" data-lang="ja-JP">
+                </div>
+            </div>
+        </div>
+    </footer>
+<script>
+
+async function fetchCategories() {
+    const response = await fetch('/api/categories');
+    const categories = await response.json();
+    populateCategorySelect(categories);
+}
+
+function populateCategorySelect(categories) {
+    const selectElement = document.getElementById('categorySelect');
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        selectElement.appendChild(option);
+    });
+}
+
+document.getElementById('languageSwitch').addEventListener('click', function() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
+// 初始化时加载品类
+document.addEventListener('DOMContentLoaded', function() {
+    fetchCategories();
+});
+</script>
+<script src="js/script.js"></script>
+</body>
+</html>
